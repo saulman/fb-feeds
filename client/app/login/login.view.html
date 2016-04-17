@@ -1,0 +1,46 @@
+<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="/" class="navbar-brand">RSS Feed Scrapper</a>
+    </div>
+  </div>
+</div>
+
+<div id="fb-root"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">   
+            <div class="alert alert-warning" ng-show="notconnected">
+                <strong>Warning!</strong> In order to use Facebook Page Feed grabber, you have to be logged in to FB and grand access for App.
+            </div>
+            <div class="alert alert-success" ng-show="connected">
+                <strong>Welcome!</strong> Now you can sign in to Facebook Page Feed grabber. If you are experiencing any issues, please contact Administrator.
+            </div>
+            <fb:login-button show-faces="true" max-rows="1"  onlogin="checkLoginState();" size="large"></fb:login-button>
+        </div>
+    </div>
+
+
+
+    <div class="row" ng-show="connected">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Login</h2>
+            <form name="form" ng-submit="login()" role="form">
+                <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" class="form-control" ng-model="username" required ng-disabled="isDisabled"/>
+                    <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" ng-model="password" required ng-disabled="isDisabled"/>
+                    <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Login</button>    
+                    <a href="/register" class="btn btn-link">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

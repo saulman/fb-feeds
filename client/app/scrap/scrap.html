@@ -1,0 +1,92 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+     	<h3> <span class="glyphicon glyphicon-hand-right"></span> Feed name: {{ feed.name }} <h3>
+     	<small>URL:  <a href="{{ feed.url }}" target="_blank"> {{ feed.url }} </a></small>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+			  <label for="sel1">Set Max Limit:</label>
+			  <select class="form-control" id="sel1" style="width:100px" ng-model="maxLimit">
+			    	<option value="25">25</option>
+			    	<option value="50">50</option>
+				  	<option value="100">100</option>
+			  </select>
+			</div>
+			<div class="form-group">
+				<button type="button" ng-disabled="!(maxLimit.length > 1)" class="btn btn-primary" ng-click="syncFeed(maxLimit)" > Sync</button>
+			</div>
+			<div class="progress progress-striped active" ng-show="loading">
+		        <div class="progress-bar progress-bar-success" style="width:0%"></div>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div ng-repeat="post in posts">
+  			<div class="col-sm-4 col-md-3">
+				<div class="thumbnail {{post.id}}">
+				  <a href="{{ post.ahref }}" target="_blank">
+				  	<span class="label label-default">{{ post.format }}</span>
+				  	<img src="{{ post.picture }}" alt="{{ post.description }}">
+				  </a>
+				  <div class="caption">
+				    
+				   	<p><small>{{ post.updated_time | date : format : timezone }}</small></p>
+			     	<p><small><span class="glyphicon glyphicon-thumbs-up"> {{ post.likes.summary.total_count }}</span></small></p>
+				    <p>
+				    	<a ng-if="post.format == 'photo' || post.format == 'video'" href="{{ post.full_picture }} " class="btn btn-default" role="button" alt="Download Image" download> <span class="glyphicon glyphicon-picture" ></span> Download</a>
+				    	<a ng-if="post.format == 'video'" href="{{ post.source }}" class="btn btn-default" role="button" alt="Download Video" download> <span class="glyphicon glyphicon-facetime-video"></span> Download</a>
+              <a ng-if="post.format == 'link'"href="{{ post.ahref }}" class="btn btn-default" role="button" ></span> Link</a>
+					</p>
+				  </div>
+				</div>
+			</div>
+			 <div class="clearfix" ng-if="($index+1) %4 == 0"></div>
+		</div>
+  </div>
+  <div class="row" ng-if="fbNextFeed">
+     <div class="col-md-4 col-md-offset-4">
+        <!--<button type="button" class="btn btn-primary" ng-click="syncFeed(maxLimit,fbNextFeed)"> Next Page </button>-->
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <!--<div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Previous -{{ maxLimit }}</button>
+          </div>-->
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" ng-click="syncFeed(maxLimit,fbNextFeed)">Next +{{ maxLimit }}</button>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <button type="button" id="errorMessageButton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#errorMessage" style="display:none">
+  Error
+</button>
+<div class="modal fade bs-example-modal-lg" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Error occured</h4>
+      </div>
+      <div class="modal-body">
+        {{ error.message }}</br>
+        Please login again.
+      </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="redirect()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div> 
+
+
+
