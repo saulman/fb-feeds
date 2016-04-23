@@ -1,35 +1,25 @@
-(function () {
+
     'use strict';
 
-    angular
-        .module('rssApp')
-        .controller('LoginController', LoginController);
+    angular.module('rssApp').controller('LoginController', ['$scope','$state','$http','$location', '$rootScope', '$cookieStore','$window','facebookService', function ($scope, $state, $http, $location, $rootScope, $cookieStore, $window,facebookService) {
 
-    LoginController.$inject = ['$scope','$state','$http','$location', 'AuthenticationService', 'FlashService', '$rootScope', '$cookieStore','$window','facebookService'];
-    function LoginController($scope, $state, $http, $location, AuthenticationService, FlashService, $rootScope, $cookieStore, $window,facebookService) {
-
-
-         //$scope.connected = false;
-
-        console.log($rootScope.keys.accessToken == null)    
-       if ($rootScope.keys.accessToken == null){
-           // $scope.connected = false;
-       }
-       if ($state.params.reload == true){
+       if ($state.params.reload === true){
             $state.reload();
        }
-         var localuser = "admin";
-         var localpass = "pienespukas"
+         var localuser = 'admin';
+         var localpass = 'pienespukas';
 
+         console.log('LoginController');
         // Base64 encoding service used by AuthenticationService
+        /*
     var Base64 = {
 
         keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
 
         encode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3 = "";
-            var enc1, enc2, enc3, enc4 = "";
+            var output = '';
+            var chr1, chr2, chr3 = '';
+            var enc1, enc2, enc3, enc4 = '';
             var i = 0;
 
             do {
@@ -102,17 +92,18 @@
             return output;
         }
     };
-            AuthenticationService.ClearCredentials();
+    */
+            //AuthenticationService.ClearCredentials();
        
         function SetCredentials(username, password) {
-            var authdata = Base64.encode(username + ':' + password);
+           // var authdata = Base64.encode(username + ':' + password);
 
             $rootScope.currentUser = {
                     username: username,
                     password: password
-                }
+                };
            
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + username; // jshint ignore:line
             $cookieStore.put('currentUser', $rootScope.currentUser);
         }
 
@@ -121,14 +112,14 @@
        $scope.login = function() {
 
 
-            if ($scope.username == localuser && $scope.password == localpass){
-                AuthenticationService.SetCredentials($scope.username, $scope.password);
-                SetCredentials (localuser , localpass)
+            if ($scope.username === localuser && $scope.password === localpass){
+                //AuthenticationService.SetCredentials($scope.username, $scope.password);
+                new SetCredentials(localuser , localpass);
                 $location.path('/');
             }
         };
 
-
+        
 
         $window.fbAsyncInit = function() {
             FB.init({ 
@@ -141,39 +132,26 @@
 
             $scope.FBUser = facebookService.getMyAuthToken() 
              .then(function(response) {
-               console.log(response)
-               console.log(!response.error)
                 if (!response.error) {
                     //console.log("connected")
-                    $scope.connected = true
+                    $scope.connected = true;
                     var APIKey = response.authResponse.accessToken;
                     $rootScope.keys = {
                                     accessToken: APIKey
                                 }; 
                     $cookieStore.put('keys', $rootScope.keys);
                 } else {
-                    $scope.notconnected = true
+                    $scope.notconnected = true;
                 }
              }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
 
-                console.log("err: "  + response)
+                console.log('err:'  + response);
               });
           
         };
-
-
-        (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-
-    }(document, 'script', 'facebook-jssdk')); 
-
-
+      /*
         function checkLoginState() {
         FB.getLoginStatus(function(response) {
           
@@ -192,8 +170,8 @@
 
            )
         };
-
-
+  */
+ }]);
         
 
 
@@ -289,9 +267,8 @@
               };
 
 */
-    }
+    
 
-})();
 
 
 

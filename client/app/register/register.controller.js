@@ -1,14 +1,7 @@
-(function () {
+
     'use strict';
 
-    angular
-        .module('rssApp')
-        .controller('RegisterController', RegisterController);
-
-    RegisterController.$inject = ['UserService', '$http','$scope', '$location', '$rootScope', 'FlashService'];
-    function RegisterController(UserService, $http, $scope, $location, $rootScope, FlashService) {
-        
-
+angular.module('rssApp').controller('RegisterController', [ '$http','$scope', function ($http, $scope) {
 
 
 
@@ -20,9 +13,9 @@
              .then(function (response) {
                     if (response.success) {
                         //$location.path('/login');
-                        console.log("success")
+                        console.log('success');
                         } else {
-                        console.log("err")
+                        console.log('err');
                          $scope.dataLoading = false;
                         }
                 });
@@ -42,7 +35,6 @@
                     }
                 });
             */
-        }
-    }
+        };
 
-})();
+}]);

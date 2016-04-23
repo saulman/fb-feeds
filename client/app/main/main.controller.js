@@ -1,19 +1,15 @@
 'use strict';
 
-angular.module('rssApp')
+angular.module('rssApp').controller('MainCtrl', ['$scope','$http','$location','$rootScope', function ($scope, $http, $location,$rootScope) {
+    console.log('MainCtrl');
 
-
-
-
-
-  .controller('MainCtrl', ['$scope','$http','$location','$rootScope', function ($scope, $http, $location,$rootScope) {
-    
-
+    $scope.feeds = {};
     $http.get('/api/feeds').success(function(feeds) {
       $scope.feeds = feeds;
     });
-    console.log("feedExceeded: " + $rootScope.errFeed)
-    if ($rootScope.errFeed != "undefined"){
+
+    console.log('feedExceeded:' + $rootScope.errFeed);
+    if ($rootScope.errFeed !== 'undefined'){
 
       $scope.feedError = true;
 
@@ -26,14 +22,14 @@ angular.module('rssApp')
                                     text : $scope.feed.gtext,
                                     image :  $scope.feed.gimage,
                                     video :  $scope.feed.gvideo }).success(function() {
-        })
+        });
 
-        location.reload()                            
-     }
+        location.reload() ;                           
+     };
 
     $scope.clear = function() {
-       $scope.feed = "";
-     }
+       $scope.feed = {};
+     };
 
     $scope.addThing = function() {
         
@@ -48,10 +44,10 @@ angular.module('rssApp')
 
 
     $scope.deleteFeed = function(feedID) {
-      if (confirm("Are you sure that you want to delele " + feedID.name + " feed?")) {
+      if (confirm('Are you sure that you want to delele' + feedID.name + 'feed?')) {
         $http.delete('/api/feeds/' + feedID.id).success(function() {
-           location.reload()    
-        })
+           location.reload();
+        });
       }
     };
 

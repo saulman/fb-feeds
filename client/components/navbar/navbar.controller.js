@@ -9,7 +9,7 @@ angular.module('rssApp')
 
     $scope.isCollapsed = true;
 
-    $scope.isActive = function(route) {
+    $scope.isActive = function() {
       //return route === $location.path();
     };
 
@@ -17,6 +17,6 @@ angular.module('rssApp')
        $cookieStore.put('globals', {});
        $cookieStore.put('keys', {});
        $location.path('/login');
-     }
+     };
 
   });

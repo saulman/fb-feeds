@@ -18,12 +18,12 @@ module.exports = {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://localhost/rss'
+            'mongodb://localhost/DATABASE_NAME'
   },
 
   // Postgres connection options
-  postgres: {
-    uri:    process.env.POSTGRES_URL ||
-            'postgres://user:pass@localhost:5432/rss'
-  }
+   postgres: {
+    uri:  process.env.DATABASE_URL
+  },
+
 };

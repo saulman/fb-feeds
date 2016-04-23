@@ -32,6 +32,10 @@ module.exports = function(config) {
       'client/app/**/*.html',
       'client/components/**/*.html'
     ],
+    exclude: [
+      "**/*.git",
+      "**/angular-scenario.js"
+    ],
 
     preprocessors: {
       '**/*.jade': 'ng-jade2js',

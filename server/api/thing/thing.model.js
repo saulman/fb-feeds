@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     info: DataTypes.STRING,
     active: DataTypes.BOOLEAN,
   });
-
+/*
   Thing
     .sync({force: true})
     .then(function (){
@@ -16,6 +16,6 @@ module.exports = function(sequelize, DataTypes) {
         active: true
       });
     });
-
+*/
   return Thing;
 };

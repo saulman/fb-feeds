@@ -1,3 +1,4 @@
+/*
 (function () {
     'use strict';
 
@@ -7,6 +8,7 @@
 
     AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
     function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService) {
+
         var service = {};
 
         service.Login = Login;
@@ -17,8 +19,8 @@
 
         function Login(username, password, callback) {
 
-            /* Dummy authentication for testing, uses $timeout to simulate api call
-             ----------------------------------------------*/
+            //Dummy authentication for testing, uses $timeout to simulate api call
+
             $timeout(function () {
                 var response;
                 UserService.GetByUsername(username)
@@ -32,8 +34,7 @@
                     });
             }, 1000);
 
-            /* Use this for real authentication
-             ----------------------------------------------*/
+            // Use this for real authentication
             //$http.post('/api/authenticate', { username: username, password: password })
             //    .success(function (response) {
             //        callback(response);
@@ -144,4 +145,8 @@
         }
     };
 
+
+
 })();
+
+*/

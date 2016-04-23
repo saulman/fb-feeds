@@ -43,9 +43,9 @@ angular.module('rssApp', [
 
 
 
-
+/*
 angular.module('rssApp').service('FBPageFeed', function ($http, $resource) {
-    var feedID = '293155980850198' // kaimietis
+    var feedID = '293155980850198'; // kaimietis
     var access_token = '1565285873784001|eUwsvx-2sSuejc_o70AO1rnZ-lY';
     var limit = '20';
 
@@ -66,7 +66,7 @@ angular.module('rssApp').service('FBPageFeed', function ($http, $resource) {
     });
     return promise;
 }) // other stuf
-
+*/
 
 angular.module('rssApp').factory('facebookService', function($q) {
     return {
@@ -75,7 +75,6 @@ angular.module('rssApp').factory('facebookService', function($q) {
             FB.api('/me', {
                 fields: 'last_name'
             }, function(response) {
-                console.log(response)
                 if (!response || response.error) {
                     deferred.reject('Error occured');
                 } else {
@@ -84,7 +83,7 @@ angular.module('rssApp').factory('facebookService', function($q) {
             });
             return deferred.promise;
         }
-    }
+    };
 
 });
 
@@ -102,14 +101,14 @@ angular.module('rssApp').factory('facebookService', function($q) {
                   // and signed request each expire
                    deferred.resolve(response);
                 } else {
-                    var err = { error : "User is not authorized or logged in"}
+                    var err = { error : 'User is not authorized or logged in'};
                    deferred.resolve(err);
                 }
                  return response;
              });
             return deferred.promise;
         }
-    }
+    };
 });
 
 
@@ -117,25 +116,23 @@ angular.module('rssApp').factory('facebookService', function($q) {
 
 
   angular.module('rssApp')
-  .run(['$rootScope', '$location', '$cookieStore', '$http', function($rootScope, $location, $cookieStore, $http) {
-
-
+  .run(['$rootScope', '$location', '$cookieStore', function($rootScope, $location, $cookieStore) {
 
     $rootScope.currentUser = $cookieStore.get('currentUser') || {};
     $rootScope.keys = $cookieStore.get('keys') || {};
-     console.log( $rootScope.keys)
+     console.log( $rootScope.keys);
         if ($rootScope.currentUser) {
             //$http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
           //  $cookieStore.put('globals', $rootScope.globals);
         }
 
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        $rootScope.$on('$locationChangeStart', function () {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
             var loggedIn = $rootScope.currentUser;
-            console.log(!loggedIn)
+            console.log(!loggedIn);
             if (restrictedPage && !loggedIn) {
-              console.log("!loggedIn")
+              console.log('!loggedIn');
                $location.path('/login');
             }
         });
