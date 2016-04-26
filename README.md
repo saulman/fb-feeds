@@ -1,6 +1,6 @@
 # fb-feeds - Application to easily grab & download Facebook Fan page content
 
-Download package and run `sudo npm install & bower install' to install.
+Download package and run `sudo npm install & bower install` to install.
 
 `grunt serve` to start application.
 
